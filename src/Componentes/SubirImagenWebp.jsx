@@ -142,7 +142,7 @@ function SubirImagenWebP() {
         </label>
           { errors.precio?.message && <p>{errors.precio.message}</p>}
 
-        <label>Oferta<input type="checkbox" onChange={(e) => { setIsOferta(e.target.value)}}/></label>
+        <label>Oferta<input type="checkbox" onChange={(e) => { setIsOferta((prev) => !prev)}}/></label>
         { isOferta && 
         <input type="text" placeholder="Ingrese porsetaje de la oferta" />   
         }

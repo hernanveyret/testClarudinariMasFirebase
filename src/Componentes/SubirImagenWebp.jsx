@@ -6,6 +6,7 @@ function SubirImagenWebP() {
   const [url, setUrl] = useState(null);
   const [ nuevoProducto, setNuevoProducto ] = useState();
   const [ archivoOriginal, setAchivoOriginal ] = useState(null)
+  const [ isOferta, setIsOferta ] = useState(false);
 
   const {
     register,
@@ -141,8 +142,10 @@ function SubirImagenWebP() {
         </label>
           { errors.precio?.message && <p>{errors.precio.message}</p>}
 
-        <label>Oferta<input type="checkbox" /></label>
-        <input type="text" placeholder="Ingrese porsetaje de la oferta" />      
+        <label>Oferta<input type="checkbox" onChange={(e) => { setIsOferta(e.target.value)}}/></label>
+        { isOferta && 
+        <input type="text" placeholder="Ingrese porsetaje de la oferta" />   
+        }
       <label>Ingrese una imagen del producto</label>
       <input type="file" accept="image/*" onChange={(e) => {setAchivoOriginal(e.target.files[0])}} />
       <input type="submit" />

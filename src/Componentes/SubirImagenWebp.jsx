@@ -1,8 +1,8 @@
-import e from "cors";
 import { useState, useEffect } from "react";
 import { useForm } from 'react-hook-form';
+import { guardarProducto } from "../firebase/auth.js";
 
-function SubirImagenWebP() {
+function SubirImagenWebP({setAdd, setInitBtn}) {
   const [url, setUrl] = useState(null);
   const [ nuevoProducto, setNuevoProducto ] = useState();
   const [ archivoOriginal, setAchivoOriginal ] = useState(null)
@@ -12,17 +12,18 @@ function SubirImagenWebP() {
     register,
     handleSubmit,
     formState: { errors },
-    watch
+    watch,
+    reset
   } = useForm();
 
   const handleChange = async (e) => {
-    
-    console.log('haciendo handleChange')
+        
     if (!archivoOriginal) return;
-    console.log('cargando el archivo: ', archivoOriginal)
+    //console.log('cargando el archivo: ', archivoOriginal)
     const webpBlob = await convertirAWebP(archivoOriginal);
     const urlWebP = await subirACloudinary(webpBlob, archivoOriginal.name);
     setUrl(urlWebP);
+    
   };
 
   const convertirAWebP = (file) => {
@@ -83,7 +84,18 @@ function SubirImagenWebP() {
 
   useEffect(() => {
     if (url) {
-      console.log("✅ Imagen subida:", url);
+      //console.log("✅ Imagen subida:", url);      
+      const productoNuevo = {
+        titulo: watch('titulo'),
+        descripcion: watch('descripcion'),
+        precio: watch('precio'),
+        oferta: isOferta,
+        porcentajeOff: isOferta ? watch('porcentaje'): 0,
+        urlImg: url
+      }
+    guardarProducto(productoNuevo);
+    console.log(productoNuevo)
+    reset();
     }
   }, [url]);
 
@@ -92,25 +104,30 @@ function SubirImagenWebP() {
     alert('Debes seleccionar una imagen');
     return;
   }
-  console.log("Datos del producto:", data);
+  //console.log("Datos del producto:", data); // data trae lo que esta en el input
   await handleChange(); // subir imagen
   // Aquí podrías guardar también el producto con la imagen subida
+
 };
 
-
+/*
   useEffect(() => {
     console.log(archivoOriginal)
   },[archivoOriginal])
-  
+  */
   return (
     <div>
+      <button onClick={() => {
+        setAdd((prev) => !prev);
+        setInitBtn((prev) => !prev)
+      }}>X</button>
       <form onSubmit={handleSubmit(onSubmit)}>
 
         <input type="text" placeholder="Ingrese titulo del producto" 
           {...register('titulo', {
             required: {
               value: true,
-              message:'Campo requerido'
+              message:'Campo obligatorio'
             }
           })}
         />
@@ -120,7 +137,7 @@ function SubirImagenWebP() {
           {...register('descripcion', {
             required:{
               value: true,
-              message: 'Campo requerido'
+              message:'Campo obligatorio'
             }
           })}
         />
@@ -130,11 +147,11 @@ function SubirImagenWebP() {
           {...register('precio', {
             required: {
               value: true,
-              message:'Campo requerido',
+              message:'Campo obligatorio',
             },
             pattern: {
               value: /^[0-9]+([.][0-9]+)?$/,
-              message:'Solo números'
+              message:'Ingrese solo números'
             }
 
           })}
@@ -144,22 +161,25 @@ function SubirImagenWebP() {
 
         <label>Oferta<input type="checkbox" onChange={(e) => { setIsOferta((prev) => !prev)}}/></label>
         { isOferta && 
-        <input type="text" placeholder="Ingrese porsetaje de la oferta" />   
+        <input type="text" placeholder="Ingrese porsetaje de la oferta" 
+          {...register('porcentaje', {
+            required:{
+              value: true,
+              message:'Campo obligatorio'
+            },
+            pattern: {
+              value: /^[0-9]+([.][0-9]+)?$/,
+              message:'Ingrese solo numeros'
+            }
+          })}
+        />   
         }
       <label>Ingrese una imagen del producto</label>
       <input type="file" accept="image/*" onChange={(e) => {setAchivoOriginal(e.target.files[0])}} />
       <input type="submit" />
       </form>
-      {url && (
-        <div style={{ marginTop: "1rem" }}>
-          <p>Imagen subida como WebP:</p>
-          <img src={url} alt="webp" width={300} />
-          <p>
-            <a href={url} target="_blank" rel="noopener noreferrer">
-              Ver en nueva pestaña
-            </a>
-          </p>
-        </div>
+      { url && (
+        <h3 style={{color:'green'}}>Producto subido con exito!!!</h3>
       )}
     </div>
   );

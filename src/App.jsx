@@ -13,12 +13,14 @@ function App() {
   const [ initBtn, setInitBtn ] = useState(false);
   const [ add, setAdd ] = useState(false);
   const [ isCarrito, setIsCarrito ] = useState(false)
-  const [ user, setUser ] = useState(null)
+  const [ user, setUser ] = useState(null);
+  const [ usuario, setUsuario ] = useState(null)
 
 useEffect(() => {
     onAuthStateChanged(auth, (user) => {
   if (user) {
     console.log("✅ UID del admin:", user.uid);
+    setUsuario(user)
     setIsLogin(false);
     setInitBtn(true)
     setUser(true)
@@ -29,6 +31,12 @@ useEffect(() => {
 });
 },[]);
 
+useEffect(() => {
+  console.log(usuario)
+ usuario?.photoURL && console.log(usuario.photoURL)
+  
+},[usuario])
+
   const Login = () => {
     return (
       <>
@@ -38,13 +46,28 @@ useEffect(() => {
     )
   };
 
-  const InitButon = () => {
+  const InitButon = () => { 
     return (
       <>
         <h3 style={{backgroundColor:'orange'}}>Prueba de carrito con base de datos</h3>
+        <h4 style={{textAlign:'center'}}>{usuario.displayName}</h4>
         <button onClick={() => { setAdd((prev) => !prev); setInitBtn((prev) => !prev) }}>Ingresar productos</button>
         <button onClick={() => { setInitBtn((prev) => !prev); setIsCarrito((prev) => !prev) }}>Carrito</button>
-        <button onClick={() => { cerrarSesion() ; setInitBtn((prev) => !prev) ; setIsLogin((prev) => !prev)}}>Cerrar Sesion</button>
+        <button onClick={() => { cerrarSesion() ; setInitBtn((prev) => !prev) ; setIsLogin((prev) => !prev)}}>Cerrar Sesion
+          <img
+            src={usuario.photoURL}
+            alt="Imagen de perfil"
+            title={usuario.displayName}
+            width={30}
+            height={30}
+            style={{
+              borderRadius: '50%',
+              marginLeft: '8px',
+              verticalAlign: 'middle'
+            }}
+          />
+
+        </button>
       </>
     )
   }

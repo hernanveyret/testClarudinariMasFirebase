@@ -5,6 +5,11 @@ import './contenedorProductos.css';
 const Carrito = ({ setInitBtn, setIsCarrito, user }) => {
   const [productos, setProductos] = useState([]);
 
+  const sacarOferta = (precio, porcentaje) => {
+    const precioOff = precio * porcentaje / 100
+    return precio - precioOff
+  }
+
   useEffect(() => {
     if (user) {
       getData((datos) => {
@@ -35,7 +40,7 @@ const Carrito = ({ setInitBtn, setIsCarrito, user }) => {
               <h3>{prod.titulo}</h3>
               <img src={prod.urlImg} alt={prod.titulo} />
               <p>{prod.descripcion}</p>
-              <p className="precio">${prod.precio}</p>
+              <p className="precio">${prod.oferta ? sacarOferta(prod.precio,prod.porcentajeOff):prod.precio}</p>
               <button>Comprar</button>
             </div>
           ))

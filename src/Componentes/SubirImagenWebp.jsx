@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useForm } from 'react-hook-form';
 import { guardarProducto } from "../firebase/auth.js";
 
-function SubirImagenWebP({setAdd, setInitBtn}) {
+function SubirImagenWebP({setAdd, setInitBtn, categorias}) {
   const [url, setUrl] = useState(null);
   const [ nuevoProducto, setNuevoProducto ] = useState();
   const [ archivoOriginal, setAchivoOriginal ] = useState(null)
@@ -122,7 +122,14 @@ function SubirImagenWebP({setAdd, setInitBtn}) {
         setInitBtn((prev) => !prev)
       }}>X</button>
       <form onSubmit={handleSubmit(onSubmit)}>
-
+        <select>
+          <option>Seleccione una categoria</option>
+          { categorias && 
+            categorias.map(c => (
+              <option key={c.id} value={c.categoria}>{c.categoria}</option>
+            ))
+          }
+        </select>
         <input type="text" placeholder="Ingrese titulo del producto" 
           {...register('titulo', {
             required: {

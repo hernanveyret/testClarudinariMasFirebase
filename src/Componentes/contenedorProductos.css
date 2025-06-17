@@ -40,3 +40,18 @@
 .card-producto button:hover {
   background-color: darkgreen;
 }
+
+.categorias {
+  display: block;
+  border: 1px solid black;
+}
+.categorias button {
+  margin: 5px;
+  width: 40px;
+  height: 40px;
+  border: 1px solid orange;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -50,6 +50,22 @@ export const crearCuentaEmail = async (datosUser) => {
   }
 }
 
+//Escuchar en tiempo real y ver las categorias
+export const getDataCategorias = (callback) => {
+  try {
+    const unsubscribe = onSnapshot(collection(db,'categorias'), snapshot => {
+      const usuarios = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+    }))
+    callback(usuarios);
+  })
+  return unsubscribe;
+  } catch (error) {
+    callback([]);
+  }
+};
+
 // Escuchar cambios en tiempo real y descargarlos
 export const getData = (callback) => {
   try {
@@ -63,6 +79,18 @@ export const getData = (callback) => {
   return unsubscribe;
   } catch (error) {
     callback([]);
+  }
+};
+
+export const crearCategorias = async (producto) => {
+  try {
+    const docRef = await addDoc(collection(db, 'categorias'), {
+      ...producto
+    
+    });
+    console.log("✅ Producto agregado con ID:", docRef.id);
+  } catch (error) {
+    console.error("⛔ Error al guardar producto:", error);
   }
 };
 

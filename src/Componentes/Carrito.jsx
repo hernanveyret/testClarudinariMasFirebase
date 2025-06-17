@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { getData } from '../firebase/auth.js';
+import { getData, getDataCategorias } from '../firebase/auth.js';
 import './contenedorProductos.css';
 
-const Carrito = ({ setInitBtn, setIsCarrito, user }) => {
-  const [productos, setProductos] = useState([]);
+const Carrito = ({ setInitBtn, setIsCarrito, user, categorias, setCategorias }) => {
+  const [productos, setProductos] = useState([]);  
 
   const sacarOferta = (precio, porcentaje) => {
     const precioOff = precio * porcentaje / 100
@@ -16,10 +16,18 @@ const Carrito = ({ setInitBtn, setIsCarrito, user }) => {
         console.log('Datos cargados: ', datos);
         setProductos(datos);
       });
+      getDataCategorias((datos) => {
+        console.log('Datos cargados: ', datos);
+        setCategorias(datos);
+      });
     } else {
       setProductos([]); // Opcional: limpiar productos si no hay usuario
     }
   }, [user]);
+
+  useEffect(() => {
+    console.log('Categorias: ',categorias)
+  },[categorias])
 
   return (
     <>
@@ -34,6 +42,12 @@ const Carrito = ({ setInitBtn, setIsCarrito, user }) => {
       </button>
 
       <div className="contenedor-productos">
+        <section className="categorias">
+          { categorias && 
+          categorias.map(c => (
+            <button>{c.categoria}</button>
+          ))}
+        </section>
         {productos.length > 0 ? (
           productos.map((prod) => (
             <div key={prod.id} className="card-producto">

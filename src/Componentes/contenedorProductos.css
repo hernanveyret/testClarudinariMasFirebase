@@ -42,8 +42,10 @@
 }
 
 .categorias {
-  display: block;
-  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 }
 .categorias button {
   margin: 5px;
@@ -54,4 +56,5 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }

@@ -40,14 +40,14 @@ const Carrito = ({ setInitBtn, setIsCarrito, user, categorias, setCategorias }) 
       >
         X
       </button>
-
-      <div className="contenedor-productos">
         <section className="categorias">
           { categorias && 
           categorias.map(c => (
             <button>{c.categoria}</button>
           ))}
         </section>
+      <div className="contenedor-productos">
+        
         {productos.length > 0 ? (
           productos.map((prod) => (
             <div key={prod.id} className="card-producto">

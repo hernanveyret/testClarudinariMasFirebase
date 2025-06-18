@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { getData, getDataCategorias, borrarCategoria } from '../firebase/auth.js';
 import './contenedorProductos.css';
 
-const Carrito = ({ setInitBtn, setIsCarrito, user, categorias, setCategorias }) => {
-  const [productos, setProductos] = useState([]);  
+const Carrito = ({ setInitBtn, setIsCarrito, user, categorias, setCategorias, setIsEditProducto, productos, setProductos, productoEditar, setProductoEditar }) => {
+  
 
   const sacarOferta = (precio, porcentaje) => {
     const precioOff = precio * porcentaje / 100
@@ -43,7 +43,7 @@ const Carrito = ({ setInitBtn, setIsCarrito, user, categorias, setCategorias }) 
         <section className="categorias">
           { categorias && 
           categorias.map(c => (
-            <button>{c.categoria}</button>
+            <button key={c.id}>{c.categoria}</button>
           ))}
         </section>
       <div className="contenedor-productos">        
@@ -51,6 +51,12 @@ const Carrito = ({ setInitBtn, setIsCarrito, user, categorias, setCategorias }) 
           productos.map((prod) => (
             <div key={prod.id} className="card-producto">
               <button 
+                onClick={() => { 
+                  setIsEditProducto((prev) => !prev);
+                  console.log(prod.id)
+                  const filtro = productos.find(p => p.id === prod.id)
+                  setProductoEditar(filtro)
+                }}
                 style={{background:'transparent'}}>
                 <svg xmlns="http://www.w3.org/2000/svg" 
                   height="24px" 

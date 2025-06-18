@@ -3,6 +3,8 @@ import { useForm } from 'react-hook-form';
 import './App.css'
 import SubirImagenWebP from './Componentes/SubirImagenWebp'
 import Carrito from './Componentes/Carrito';
+import EditarProducto from './Componentes/EditarProducto.jsx';
+
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase/config.js";
 
@@ -16,7 +18,11 @@ function App() {
   const [ isCarrito, setIsCarrito ] = useState(false)
   const [ user, setUser ] = useState(null);
   const [ usuario, setUsuario ] = useState(null);
-  const [ categorias, setCategorias ] = useState([])
+  const [ categorias, setCategorias ] = useState([]);
+  const [ isEditProducto, setIsEditProducto ] = useState(false);
+  const [ productos, setProductos ] = useState([]);  
+
+  const [ productoEditar, setProductoEditar ] = useState(null)
 
   const {
     register,
@@ -180,7 +186,19 @@ const subMit = (data) => {
           user={user}
           categorias={categorias}
           setCategorias={setCategorias}
+          setIsEditProducto={setIsEditProducto}
+          setProductos={setProductos}
+          productos={productos}
+          productoEditar={productoEditar}
+          setProductoEditar={setProductoEditar}
         />
+      }
+      { isEditProducto && 
+          <EditarProducto 
+          setIsEditProducto={setIsEditProducto}
+          productoEditar={productoEditar}
+          categorias={categorias}
+          />
       }
 
     </>

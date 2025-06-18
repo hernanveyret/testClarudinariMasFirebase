@@ -51,7 +51,27 @@ input[type='text']:focus {
     transform: rotate(360deg);
   }
 }
-
+.lista-categorias {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+.lista-categorias li {
+  background-color: orangered;
+  list-style: none;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  gap: 10px;
+}
+.btn {
+  padding:0;
+  background: transparent;
+}
 @media (prefers-reduced-motion: no-preference) {
   a:nth-of-type(2) .logo {
     animation: logo-spin infinite 20s linear;

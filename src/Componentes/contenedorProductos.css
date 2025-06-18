@@ -49,12 +49,15 @@
 }
 .categorias button {
   margin: 5px;
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
   border: 1px solid orange;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
+}
+.btn-card {
+  border: 1px solid red;
 }

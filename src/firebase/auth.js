@@ -6,14 +6,14 @@ import { GoogleAuthProvider,
          createUserWithEmailAndPassword } from "firebase/auth";
 
 import { collection,
-         getDocs,
          onSnapshot, 
+         addDoc,
+         deleteDoc,
+         getDocs,
          doc, 
          updateDoc, 
          arrayUnion, 
          arrayRemove,
-         addDoc,
-         Timestamp
         } from "firebase/firestore";
 
 import { auth, db } from "./config.js";
@@ -59,6 +59,7 @@ export const getDataCategorias = (callback) => {
         ...doc.data()
     }))
     callback(usuarios);
+    console.log(usuarios)
   })
   return unsubscribe;
   } catch (error) {
@@ -97,15 +98,23 @@ export const crearCategorias = async (producto) => {
 export const guardarProducto = async (producto) => {
   try {
     const docRef = await addDoc(collection(db, 'productos'), {
-      ...producto,
-      creadoEn: Timestamp.now(),
+      ...producto      
     });
     console.log("✅ Producto agregado con ID:", docRef.id);
   } catch (error) {
     console.error("⛔ Error al guardar producto:", error);
   }
 };
-
+// Borra la categoria o el prodructo seleccionada/o por ID
+export const borrarCategoria = async (nombreColeccion,id) => {
+  try {
+    const docRef = doc(db,nombreColeccion, id);
+    await deleteDoc(docRef);
+    console.log('categoria eliminada con exito')
+  } catch (error) {
+    console.log('No se pudo eliminar la categoria')
+  }
+}
 // Escucha si hay un usuario autenticado
 /*
 onAuthStateChanged(auth, (user) => {

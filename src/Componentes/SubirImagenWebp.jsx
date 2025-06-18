@@ -91,7 +91,8 @@ function SubirImagenWebP({setAdd, setInitBtn, categorias}) {
         precio: watch('precio'),
         oferta: isOferta,
         porcentajeOff: isOferta ? watch('porcentaje'): 0,
-        urlImg: url
+        urlImg: url,
+        categoria: watch('categoria')
       }
     guardarProducto(productoNuevo);
     console.log(productoNuevo)
@@ -122,14 +123,23 @@ function SubirImagenWebP({setAdd, setInitBtn, categorias}) {
         setInitBtn((prev) => !prev)
       }}>X</button>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <select>
-          <option>Seleccione una categoria</option>
+        <select 
+          id="selectCategoria"
+          {...register('categoria', {
+            required: {
+              value: true,
+              message:'Campo Obligatorio'
+            }
+          })}
+          >            
+          <option value="">Seleccione una categoria</option>
           { categorias && 
             categorias.map(c => (
               <option key={c.id} value={c.categoria}>{c.categoria}</option>
             ))
           }
         </select>
+        { errors.categoria?.message && <p>{errors.categoria.message}</p>}
         <input type="text" placeholder="Ingrese titulo del producto" 
           {...register('titulo', {
             required: {

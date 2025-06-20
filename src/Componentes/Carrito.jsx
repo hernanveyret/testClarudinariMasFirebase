@@ -13,11 +13,11 @@ const Carrito = ({ setInitBtn, setIsCarrito, user, categorias, setCategorias, se
   useEffect(() => {
     if (user) {
       getData((datos) => {
-        console.log('Datos cargados: ', datos);
+        //console.log('Datos cargados: ', datos);
         setProductos(datos);
       });
       getDataCategorias((datos) => {
-        console.log('Datos cargados: ', datos);
+        //console.log('Datos cargados: ', datos);
         setCategorias(datos);
       });
     } else {
@@ -25,10 +25,11 @@ const Carrito = ({ setInitBtn, setIsCarrito, user, categorias, setCategorias, se
     }
   }, [user]);
 
+  /*
   useEffect(() => {
     console.log('Categorias: ',categorias)
   },[categorias])
-
+*/
   return (
     <>
       <h2>Carrito de compras</h2>
@@ -82,8 +83,9 @@ const Carrito = ({ setInitBtn, setIsCarrito, user, categorias, setCategorias, se
               <img src={prod.urlImg} alt={prod.titulo} />
               <p>{prod.categoria}</p>
               <p>{prod.descripcion}</p>
-              <p className="precio">${prod.oferta ? sacarOferta(prod.precio,prod.porcentajeOff):prod.precio}</p>
-              <button>Comprar</button>
+              { prod.oferta && <p style={{color: 'grey', textDecoration:'line-through'}}>$ {prod.precio}</p>}
+              <p className="precio">$ {prod.oferta ? sacarOferta(prod.precio,prod.porcentajeOff):prod.precio}</p>
+              
             </div>
           ))
         ) : (

@@ -9,9 +9,10 @@ import { collection,
          onSnapshot, 
          addDoc,
          deleteDoc,
-         getDocs,
          doc, 
+         setDoc,
          updateDoc, 
+         getDocs,
          arrayUnion, 
          arrayRemove,
         } from "firebase/firestore";
@@ -59,7 +60,7 @@ export const getDataCategorias = (callback) => {
         ...doc.data()
     }))
     callback(usuarios);
-    console.log(usuarios)
+    //console.log(usuarios)
   })
   return unsubscribe;
   } catch (error) {
@@ -113,6 +114,24 @@ export const borrarCategoria = async (nombreColeccion,id) => {
     console.log('categoria eliminada con exito')
   } catch (error) {
     console.log('No se pudo eliminar la categoria')
+  }
+}
+
+export const editarProducto = async (idProducto, update) => {
+  try {
+    const docRef = doc(db,"productos", idProducto);
+    await setDoc(docRef, update);
+  } catch (error) {
+    
+  }
+}
+
+export const editarCategoria = async (idCategoria, update) => {
+  try {
+    const docRef = doc(db,'categorias', idCategoria);
+    await updateDoc(docRef, { categoria: update})
+  } catch (error) {
+    
   }
 }
 // Escucha si hay un usuario autenticado

@@ -5,7 +5,6 @@
   text-align: center;
 }
 p {
-  color: red;
   font-size: 12px;
   padding: 0;
   margin-left: 5px;
@@ -43,20 +42,14 @@ input[type='text']:focus {
   border-color: green;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
 .lista-categorias {
   display: flex;
+  width: 50%;
   justify-content: center;
   align-items: center;
   gap: 5px;
   flex-wrap: wrap;
+  margin: 10px auto;
 }
 .lista-categorias li {
   background-color: orangered;

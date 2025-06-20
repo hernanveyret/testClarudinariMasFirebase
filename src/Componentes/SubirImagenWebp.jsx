@@ -90,7 +90,7 @@ function SubirImagenWebP({setAdd, setInitBtn, categorias}) {
         descripcion: watch('descripcion'),
         precio: watch('precio'),
         oferta: isOferta,
-        porcentajeOff: isOferta ? watch('porcentaje'): 0,
+        porcentajeOff: isOferta ? watch('porcentaje'): '',
         urlImg: url,
         categoria: watch('categoria')
       }
@@ -170,7 +170,6 @@ function SubirImagenWebP({setAdd, setInitBtn, categorias}) {
               value: /^[0-9]+([.][0-9]+)?$/,
               message:'Ingrese solo números'
             }
-
           })}
         />
         </label>
@@ -189,7 +188,8 @@ function SubirImagenWebP({setAdd, setInitBtn, categorias}) {
               message:'Ingrese solo numeros'
             }
           })}
-        />   
+        /> 
+        
         }
       <label>Ingrese una imagen del producto</label>
       <input type="file" accept="image/*" onChange={(e) => {setAchivoOriginal(e.target.files[0])}} />

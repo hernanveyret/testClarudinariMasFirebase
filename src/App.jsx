@@ -9,6 +9,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase/config.js";
 
 import { loginWhihtGoogle, cerrarSesion, crearCategorias, borrarCategoria, getDataCategorias} from './firebase/auth.js';
+import EditarCategoria from './Componentes/EditarCategoria.jsx';
 
 function App() {
   const [ isLogin, setIsLogin ] = useState(true);
@@ -19,7 +20,10 @@ function App() {
   const [ user, setUser ] = useState(null);
   const [ usuario, setUsuario ] = useState(null);
   const [ categorias, setCategorias ] = useState([]);
+  const [ idCategoria, setIdCategoria ] = useState(null);
+  const [ nombreCategoria, setNombreCategoria ] = useState(null)
   const [ isEditProducto, setIsEditProducto ] = useState(false);
+  const [ isEditCategorias, setIsEditCategorias ] = useState(false);
   const [ productos, setProductos ] = useState([]);  
 
   const [ productoEditar, setProductoEditar ] = useState(null)
@@ -93,6 +97,7 @@ const subMit = (data) => {
                 
                 <button
                   className="btn"
+                  onClick={() => {setIsEditCategorias((prev) => !prev); setIdCategoria(c.id); setNombreCategoria(c.categoria)}}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" 
                   height="24px" 
@@ -166,6 +171,14 @@ const subMit = (data) => {
       { isCategorias && 
         <CrearCategorias 
         categorias={categorias}
+        />
+      }
+      {
+        isEditCategorias &&
+        <EditarCategoria 
+        setIsEditCategorias={setIsEditCategorias}
+        nombreCategoria={nombreCategoria}
+        idCategoria={idCategoria}
         />
       }
       { isLogin && 

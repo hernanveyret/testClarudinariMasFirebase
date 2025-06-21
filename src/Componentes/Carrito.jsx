@@ -32,7 +32,7 @@ const Carrito = ({ setInitBtn, setIsCarrito, user, categorias, setCategorias, se
 */
   return (
     <>
-      <h2>Carrito de compras</h2>
+      <p style={{fontSize:'18px', fontWeight:'bold'}}>* Vista de productos</p>
       <button
         onClick={() => {
           setIsCarrito((prev) => !prev);

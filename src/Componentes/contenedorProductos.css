@@ -42,10 +42,18 @@
 }
 
 .categorias {
+  width: 90%;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  border: 1px solid red;
+}
+.categorias::-webkit-scrollbar {
+  display: none;
+}
+.categorias {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 .categorias button {
   margin: 5px;

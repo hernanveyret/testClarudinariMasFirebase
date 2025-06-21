@@ -4,6 +4,18 @@
   padding: 2rem;
   text-align: center;
 }
+.contenedor-actualizar {
+  background-color: rgba(128, 128, 128, 0.61);
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 p {
   font-size: 12px;
   padding: 0;
@@ -21,7 +33,7 @@ form {
   border-radius: 10px;
   box-shadow: 0 0 20px 1px rgba(128, 128, 128, 0.849);
 }
-input[type='text'] {
+input[type='text'], input[type='password'] {
   padding:10px;
   border: 1px solid transparent;
   border-radius: 5px;
@@ -41,7 +53,9 @@ input[type="submit"]:hover {
 input[type='text']:focus {
   border-color: green;
 }
-
+input[type='password']:focus {
+  border-color: green;
+}
 .lista-categorias {
   display: flex;
   width: 50%;

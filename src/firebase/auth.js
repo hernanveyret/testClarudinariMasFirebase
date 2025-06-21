@@ -17,6 +17,12 @@ import { collection,
          arrayRemove,
         } from "firebase/firestore";
 
+import { 
+        updateEmail, 
+        EmailAuthProvider, 
+        reauthenticateWithCredential 
+      } from "firebase/auth";
+
 import { auth, db } from "./config.js";
 
 const provider = new GoogleAuthProvider();
@@ -33,6 +39,22 @@ export const loginWhihtGoogle = async () => {
   }
 }
 
+// Login con mail y contraseña
+export const loginConMail = async(dataUser) => {
+  try {
+    const userLogin = await signInWithEmailAndPassword(auth,dataUser.correo, dataUser.contraseña);
+    return userLogin.user
+  } catch (error) {
+  if (error.code === 'auth/wrong-password') {
+    console.log('Contraseña incorrecta');
+  } else if (error.code === 'auth/user-not-found') {
+    console.log('Usuario no encontrado');
+  } else {
+    console.log('Error de autenticación', error.message);
+  }
+  throw error;
+}
+}
 // Cerrar sesion
 export const cerrarSesion = async () => {
   signOut(auth).then(() => {

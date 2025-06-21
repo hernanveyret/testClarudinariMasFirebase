@@ -42,11 +42,11 @@
 }
 
 .categorias {
-  width: 90%;
+  width: 100%;
   display: flex;
   overflow-x: auto;
   scroll-behavior: smooth;
-  
+  justify-content: center;
 }
 .categorias::-webkit-scrollbar {
   display: none;

@@ -8,8 +8,9 @@ import EditarProducto from './Componentes/EditarProducto.jsx';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase/config.js";
 
-import { loginWhihtGoogle, cerrarSesion, crearCategorias, borrarCategoria, getDataCategorias} from './firebase/auth.js';
+import { loginConMail ,loginWhihtGoogle, cerrarSesion, crearCategorias, borrarCategoria, getDataCategorias} from './firebase/auth.js';
 import EditarCategoria from './Componentes/EditarCategoria.jsx';
+import FormAuth from './Componentes/FormAuth.jsx';
 
 function App() {
   const [ isLogin, setIsLogin ] = useState(true);
@@ -24,6 +25,7 @@ function App() {
   const [ nombreCategoria, setNombreCategoria ] = useState(null)
   const [ isEditProducto, setIsEditProducto ] = useState(false);
   const [ isEditCategorias, setIsEditCategorias ] = useState(false);
+  const [ isActualizar, setIsActualizar ] = useState(false)
   const [ productos, setProductos ] = useState([]);  
 
   const [ productoEditar, setProductoEditar ] = useState(null)
@@ -122,17 +124,44 @@ const subMit = (data) => {
       </li>
     ))
   )}
-</ul>
+      </ul>
 
       </div>
     )
   };
 
-  const Login = () => {
+  const ActualizarEmailContraseña = () => {
+
+    const actualizar = async (data) => {
+      console.log(data)
+    }
+
     return (
-      <>
-        <h2>Iniciar Sesion</h2>
-        <button onClick={loginWhihtGoogle}>Inciar sesion con Google</button>
+      <div className="contenedor-actualizar">
+        <button onClick={() => { setIsActualizar((prev) => !prev)}}>X</button>
+        <FormAuth 
+          titulo={'Actualizar Email y Contraseña'}
+          subMitLogin={actualizar}
+          actualizar={true}
+        />
+      </div>
+    ) 
+  }
+
+  const Login = () => {
+
+    const subMitLogin = async (data) => {
+      console.log(data)
+      await loginConMail (data)
+      reset();
+    }
+
+    return (
+      <>      
+        <FormAuth
+        titulo={'Iniciar Sesion'}
+          subMitLogin={subMitLogin}
+        />
       </>
     )
   };
@@ -146,9 +175,11 @@ const subMit = (data) => {
           <button onClick={() => { setInitBtn((prev) => !prev); setIsCategorias((prev) => !prev) }}>Crear categorias</button>
           <button onClick={() => { setAdd((prev) => !prev); setInitBtn((prev) => !prev) }}>Ingresar productos</button>
           <button onClick={() => { setInitBtn((prev) => !prev); setIsCarrito((prev) => !prev) }}>Carrito</button>
+          <button onClick={() => { setIsActualizar((prev) => !prev)}}>Cambio de usuario y contraseña</button>
           <button onClick={() => { cerrarSesion() ; setInitBtn((prev) => !prev) ; setIsLogin((prev) => !prev)}}>Cerrar Sesion
             <img
-              src={usuario.photoURL}
+              src={usuario.photoURL ? usuario.photoURL : '/icons/icon-192x192.png'}
+
               alt="Imagen de perfil"
               title={usuario.displayName}
               width={30}
@@ -168,6 +199,9 @@ const subMit = (data) => {
 
   return (
     <> 
+      { isActualizar && 
+        <ActualizarEmailContraseña />
+      }
       { isCategorias && 
         <CrearCategorias 
         categorias={categorias}

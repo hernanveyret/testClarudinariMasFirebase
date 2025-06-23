@@ -206,7 +206,7 @@ const subMit = (data) => {
         
           <button onClick={() => { setInitBtn((prev) => !prev); setIsCategorias((prev) => !prev) }}>Crear categorias</button>
           <button onClick={() => { setAdd((prev) => !prev); setInitBtn((prev) => !prev) }}>Ingresar productos</button>
-          <button onClick={() => { setInitBtn((prev) => !prev); setIsCarrito((prev) => !prev) }}>Carrito</button>
+          <button onClick={() => { setInitBtn((prev) => !prev); setIsCarrito((prev) => !prev) }}>Lista de productos</button>
           <button onClick={() => { setIsActualizar((prev) => !prev)}}>Cambio de usuario y contraseña</button>
           <button onClick={() => { cerrarSesion() ; setInitBtn((prev) => !prev) ; setIsLogin((prev) => !prev)}}>Cerrar Sesion
             <img

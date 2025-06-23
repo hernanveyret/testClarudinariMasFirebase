@@ -18,9 +18,15 @@ import { collection,
         } from "firebase/firestore";
 
 import { 
-        updateEmail, 
+        updatePassword, 
         EmailAuthProvider, 
         reauthenticateWithCredential 
+        } from "firebase/auth";
+
+import { 
+        updateEmail, 
+       
+        
       } from "firebase/auth";
 
 import { auth, db } from "./config.js";
@@ -50,7 +56,7 @@ export const loginConMail = async(dataUser) => {
   } else if (error.code === 'auth/user-not-found') {
     console.log('Usuario no encontrado');
   } else {
-    console.log('Error de autenticación', error.message);
+    console.log('Error de autenticación', error.message, error.code);
   }
   throw error;
 }
@@ -156,6 +162,42 @@ export const editarCategoria = async (idCategoria, update) => {
     
   }
 }
+
+// cambiar contraseña
+export const cambiarContrasena = async (user, contraseñaActual, nuevaContrasena) => {
+
+  try {
+    // Reautenticar al usuario con la contraseña actual
+    const credencial = EmailAuthProvider.credential(user.email, contraseñaActual);
+    await reauthenticateWithCredential(user, credencial);
+
+    // Actualizar la contraseña
+    await updatePassword(user, nuevaContrasena);
+    console.log("Contraseña actualizada correctamente");
+  } catch (error) {
+    console.error("Error cambiando la contraseña:", error);
+    throw error;
+  }
+};
+
+// cambiar correo
+export const cambiarCorreo = async (user, contraseñaActual, nuevoCorreo) => {
+  console.log("Proveedor de autenticación:", user.providerData);
+
+  try {
+    // Reautenticar al usuario con la contraseña actual
+    const credencial = EmailAuthProvider.credential(user.email, contraseñaActual);
+    await reauthenticateWithCredential(user, credencial);
+
+    // Actualizar el correo electrónico
+    await updateEmail(user, nuevoCorreo);
+    console.log("Correo electrónico actualizado correctamente");
+  } catch (error) {
+    console.error("Error cambiando el correo electrónico:", error);
+    throw error;
+  }
+};
+
 // Escucha si hay un usuario autenticado
 /*
 onAuthStateChanged(auth, (user) => {

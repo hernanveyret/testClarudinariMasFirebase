@@ -8,7 +8,7 @@ import EditarProducto from './Componentes/EditarProducto.jsx';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase/config.js";
 
-import { loginConMail ,loginWhihtGoogle, cerrarSesion, crearCategorias, borrarCategoria, getDataCategorias} from './firebase/auth.js';
+import { loginConMail ,loginWhihtGoogle, cerrarSesion, crearCategorias, borrarCategoria, getDataCategorias, cambiarContrasena, cambiarCorreo} from './firebase/auth.js';
 import EditarCategoria from './Componentes/EditarCategoria.jsx';
 import FormAuth from './Componentes/FormAuth.jsx';
 
@@ -26,7 +26,9 @@ function App() {
   const [ isEditProducto, setIsEditProducto ] = useState(false);
   const [ isEditCategorias, setIsEditCategorias ] = useState(false);
   const [ isActualizar, setIsActualizar ] = useState(false)
-  const [ productos, setProductos ] = useState([]);  
+  const [ productos, setProductos ] = useState([]);
+
+  const [ usuarioActual, setUsuarioActual ] = useState(null) 
 
   const [ productoEditar, setProductoEditar ] = useState(null)
 
@@ -46,6 +48,8 @@ useEffect(() => {
     setIsLogin(false);
     setInitBtn(true)
     setUser(true)
+    const currentUsuario = auth.currentUser
+    setUsuarioActual(currentUsuario)
   } else {
     console.log("⛔ No hay usuario logueado");
     setUser(false)
@@ -64,6 +68,31 @@ useEffect(() => {
   return () => unsubscribe(); // Limpia el listener cuando se desmonta
 }, []);
 
+// eliminar imagen de cloudinary
+
+const eliminarImagen = async (publicId) => {
+  try {
+    const res = await fetch('http://localhost:4000/api/eliminar-imagen', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ public_id: publicId }),
+    });
+
+    const data = await res.json();
+    if (data.success) {
+      console.log('✅ Imagen eliminada con éxito:', data.resultado);
+    } else {
+      console.error('❌ Error al eliminar:', data.error);
+    }
+  } catch (err) {
+    console.error('❌ Error en fetch:', err);
+  }
+};
+
+
+//-----------------------
 
 const subMit = (data) => { 
   console.log('formulario cargado: ', data)
@@ -134,6 +163,9 @@ const subMit = (data) => {
 
     const actualizar = async (data) => {
       console.log(data)
+      console.log('usuario actual ', usuarioActual)
+      await cambiarContrasena(usuarioActual, data.contraseña, data.contraseñaNueva)
+      //await cambiarCorreo(usuarioActual, data.contraseña, data.correoNuevo)
     }
 
     return (
@@ -238,6 +270,7 @@ const subMit = (data) => {
           productos={productos}
           productoEditar={productoEditar}
           setProductoEditar={setProductoEditar}
+          eliminarImagen={eliminarImagen}
         />
       }
       { isEditProducto && 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
+
 const FormAuth = ({subMitLogin, titulo, actualizar}) => {
   const {
     register,
@@ -14,6 +15,7 @@ const FormAuth = ({subMitLogin, titulo, actualizar}) => {
     <div>
         <h2 style={{backgroundColor:'orange', padding:'0 20px'}}>{titulo}</h2>
       <form onSubmit={handleSubmit(subMitLogin)}>
+                
                 <input type="text" placeholder='Ingrese su correo'
                   {...register("correo", {
                     required: {

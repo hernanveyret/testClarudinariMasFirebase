@@ -1,71 +1,57 @@
-.contenedor-productos {
+.fila-producto {
   display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  padding: 1rem;
-  justify-content: center;
-}
-
-.card-producto {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  width: 200px;
-  padding: 1rem;
-  text-align: center;
-  box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
-  background-color: #fff;
-}
-
-.card-producto img {
-  width: 100%;
-  height: auto;
-  margin-bottom: 0.5rem;
-  border-radius: 4px;
-}
-
-.precio {
-  font-weight: bold;
-  margin: 0.5rem 0;
-}
-
-.card-producto button {
-  background-color: green;
-  color: white;
-  border: none;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
   padding: 0.5rem;
-  border-radius: 4px;
-  cursor: pointer;
+  gap: 1rem;
+  font-size: 14px;
 }
 
-.card-producto button:hover {
-  background-color: darkgreen;
-}
-
-.categorias {
-  width: 100%;
-  display: flex;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  justify-content: center;
-}
-.categorias::-webkit-scrollbar {
-  display: none;
-}
-.categorias {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-.categorias button {
-  margin: 5px;
+.fila-producto img {
   width: 60px;
   height: 60px;
-  border: 1px solid orange;
-  border-radius: 50%;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.fila-datos {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.fila-datos p,
+.fila-datos label {
+  margin: 0;
+  min-width: 100px;
+}
+
+.fila-botones {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.categorias {
   display: flex;
   justify-content: center;
-  align-items: center;
-  overflow: hidden;
+  height: 60px;
+  gap: 10px;
 }
-.btn-card {
-  border: 1px solid red;
+.categorias button {
+  border:  1px solid orangered;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  position: relative;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+.categorias button p {
+  position: absolute;
+  bottom:-20px;
+  
 }

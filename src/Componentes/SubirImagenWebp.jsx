@@ -7,6 +7,7 @@ function SubirImagenWebP({setAdd, setInitBtn, categorias}) {
   const [ nuevoProducto, setNuevoProducto ] = useState();
   const [ archivoOriginal, setAchivoOriginal ] = useState(null)
   const [ isOferta, setIsOferta ] = useState(false);
+  const [ publicId, setIsPublicId ] = useState(null);
 
   const {
     register,
@@ -75,6 +76,7 @@ function SubirImagenWebP({setAdd, setInitBtn, categorias}) {
     const data = await res.json();
 
     if (data.secure_url) {
+      setIsPublicId(data.public_id)
       return data.secure_url;
     } else {
       console.error("Error al subir:", data);
@@ -92,7 +94,8 @@ function SubirImagenWebP({setAdd, setInitBtn, categorias}) {
         oferta: isOferta,
         porcentajeOff: isOferta ? watch('porcentaje'): '',
         urlImg: url,
-        categoria: watch('categoria')
+        categoria: watch('categoria'),
+        public_id: publicId
       }
     guardarProducto(productoNuevo);
     console.log(productoNuevo)

@@ -42,10 +42,9 @@ const Carrito = ({
       </button>
 
       <section className="categorias">
-        {categorias && categorias.map(c => (
-        <div className="cat">
-          <button key={c.id}><p>{c.categoria}</p></button>
-        </div>  
+        {categorias && categorias.map(c => (    
+          <button key={c.id}>{c.categoria}</button>    
+        
         ))}
       </section>
 

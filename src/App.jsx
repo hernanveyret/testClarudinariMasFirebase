@@ -204,8 +204,8 @@ const subMit = (data) => {
         <h3 style={{backgroundColor:'orange'}}>Administrador de produtos</h3>
         <h4 style={{textAlign:'center'}}>{usuario.displayName}</h4>
         <div className="contenedor-btn">
-          <button onClick={() => { setInitBtn((prev) => !prev); setIsCategorias((prev) => !prev) }}>Crear categorias</button>
-          <button onClick={() => { setAdd((prev) => !prev); setInitBtn((prev) => !prev) }}>Ingresar productos</button>
+          <button onClick={() => { setInitBtn((prev) => !prev); setIsCategorias((prev) => !prev) }} title="Crear/editar/borrar Catgorias">Categorias</button>
+          <button onClick={() => { setAdd((prev) => !prev); setInitBtn((prev) => !prev) }} title="Ingresar productos">Ingresar productos</button>
           <button onClick={() => { setInitBtn((prev) => !prev); setIsCarrito((prev) => !prev) }}>Lista de productos</button>
           <button onClick={() => { setIsActualizar((prev) => !prev)}}>Cambio de contraseña</button>
           <button onClick={() => { cerrarSesion() ; setInitBtn((prev) => !prev) ; setIsLogin((prev) => !prev)}}>Cerrar Sesion

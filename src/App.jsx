@@ -201,13 +201,13 @@ const subMit = (data) => {
   const InitButon = () => { 
     return (
       <>
-        <h3 style={{backgroundColor:'orange'}}>Prueba de carrito con base de datos</h3>
+        <h3 style={{backgroundColor:'orange'}}>Administrador de produtos</h3>
         <h4 style={{textAlign:'center'}}>{usuario.displayName}</h4>
-        
+        <div className="contenedor-btn">
           <button onClick={() => { setInitBtn((prev) => !prev); setIsCategorias((prev) => !prev) }}>Crear categorias</button>
           <button onClick={() => { setAdd((prev) => !prev); setInitBtn((prev) => !prev) }}>Ingresar productos</button>
           <button onClick={() => { setInitBtn((prev) => !prev); setIsCarrito((prev) => !prev) }}>Lista de productos</button>
-          <button onClick={() => { setIsActualizar((prev) => !prev)}}>Cambio de usuario y contraseña</button>
+          <button onClick={() => { setIsActualizar((prev) => !prev)}}>Cambio de contraseña</button>
           <button onClick={() => { cerrarSesion() ; setInitBtn((prev) => !prev) ; setIsLogin((prev) => !prev)}}>Cerrar Sesion
             <img
               src={usuario.photoURL ? usuario.photoURL : '/icons/icon-192x192.png'}
@@ -223,7 +223,7 @@ const subMit = (data) => {
               }}
             />
           </button>
-        
+        </div>
         
       </>
     )

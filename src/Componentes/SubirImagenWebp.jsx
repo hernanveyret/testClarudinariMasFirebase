@@ -95,7 +95,8 @@ function SubirImagenWebP({setAdd, setInitBtn, categorias}) {
         porcentajeOff: isOferta ? watch('porcentaje'): '',
         urlImg: url,
         categoria: watch('categoria'),
-        public_id: publicId
+        public_id: publicId,
+        favorito: false
       }
     guardarProducto(productoNuevo);
     console.log(productoNuevo)

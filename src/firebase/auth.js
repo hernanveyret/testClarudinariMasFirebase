@@ -113,9 +113,13 @@ export const getData = (callback) => {
 };
 
 export const crearCategorias = async (producto) => {
+  const categorias = {
+    categoria: producto.categoria,
+    urlImg: producto.urlImg
+  }
   try {
     const docRef = await addDoc(collection(db, 'categorias'), {
-      ...producto
+      ...categorias
     
     });
     console.log("✅ Producto agregado con ID:", docRef.id);

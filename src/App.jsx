@@ -8,14 +8,24 @@ import EditarProducto from './Componentes/EditarProducto.jsx';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase/config.js";
 
-import { loginConMail ,loginWhihtGoogle, cerrarSesion, crearCategorias, borrarCategoria, getDataCategorias, cambiarContrasena, cambiarCorreo} from './firebase/auth.js';
+import { loginConMail, 
+         loginWhihtGoogle, 
+         cerrarSesion, 
+         crearCategorias, 
+         borrarCategoria, 
+         getDataCategorias, 
+         cambiarContrasena, 
+         cambiarCorreo,
+        guardarPrecioEnvio
+        } from './firebase/auth.js';
 import EditarCategoria from './Componentes/EditarCategoria.jsx';
 import FormAuth from './Componentes/FormAuth.jsx';
 
 function App() {
   const [ isLogin, setIsLogin ] = useState(true);
   const [ initBtn, setInitBtn ] = useState(false);
-  const [ isCategorias, setIsCategorias ] = useState(false)
+  const [ isCategorias, setIsCategorias ] = useState(false);
+  const [ isEnvio, setIsEnvio ] = useState(false)
   const [ add, setAdd ] = useState(false);
   const [ isCarrito, setIsCarrito ] = useState(false)
   const [ user, setUser ] = useState(null);
@@ -305,6 +315,37 @@ function App() {
     )
   };
 
+ 
+  const CostoDeEnvio = () => {
+     const cargarEnvio = (data) => {
+      console.log(data)
+      guardarPrecioEnvio(data)
+  }
+
+    return (
+      <div className="contenedor-envio">
+        <h3 style={{backgroundColor:'orange', padding: '5px'}}>Ingrese el valor del envio</h3>
+        <button onClick={() => { setIsEnvio(false)}}>X</button>
+        <form onSubmit={handleSubmit(cargarEnvio)}>
+          <input type="text" 
+            {...register('envio', {
+            required: {
+              value: true,
+              message:'Campo obligatorio',
+            },
+            pattern: {
+              value: /^[0-9]+([.][0-9]+)?$/,
+              message:'Ingrese solo números'
+            }
+          })}
+          />
+          { errors.envio?.message && <p>{errors.envio.message}</p>}
+          <button type="submit">CARGAR</button>
+        </form>
+      </div>
+    )
+  }
+
   const InitButon = () => { 
     return (
       <>
@@ -315,6 +356,7 @@ function App() {
           <button onClick={() => { setAdd((prev) => !prev); setInitBtn((prev) => !prev) }} title="Ingresar productos">Ingresar productos</button>
           <button onClick={() => { setInitBtn((prev) => !prev); setIsCarrito((prev) => !prev) }}>Lista de productos</button>
           <button onClick={() => { setIsActualizar((prev) => !prev)}}>Cambio de contraseña</button>
+          <button onClick={() => { setIsEnvio(true)}}>Costo de envio</button>
           <button onClick={() => { cerrarSesion() ; setInitBtn((prev) => !prev) ; setIsLogin((prev) => !prev)}}>Cerrar Sesion
             <img
               src={usuario.photoURL ? usuario.photoURL : '/icons/icon-192x192.png'}
@@ -338,6 +380,9 @@ function App() {
 
   return (
     <> 
+      { isEnvio &&
+        <CostoDeEnvio />
+      }
       { isActualizar && 
         <ActualizarEmailContraseña />
       }

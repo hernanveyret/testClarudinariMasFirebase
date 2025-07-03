@@ -167,6 +167,25 @@ export const editarCategoria = async (idCategoria, update) => {
   }
 }
 
+export const guardarPrecioEnvio = async (costo) => {
+  const envio = {
+    envio: costo,
+  };
+
+  try {
+    // Documento con ID fijo "precio"
+    const envioRef = doc(db, 'envio', 'precio');
+
+    // Crea o actualiza ese documento
+    await setDoc(envioRef, envio);
+
+    console.log("✅ Precio de envío guardado correctamente");
+  } catch (error) {
+    console.error("⛔ Error al guardar el precio de envío:", error);
+  }
+};
+
+
 // cambiar contraseña
 export const cambiarContrasena = async (user, contraseñaActual, nuevaContrasena) => {
 

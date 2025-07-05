@@ -166,7 +166,7 @@ export const editarCategoria = async (idCategoria, update) => {
     
   }
 }
-
+ 
 export const guardarPrecioEnvio = async (costo) => {
   const envio = {
     envio: costo,

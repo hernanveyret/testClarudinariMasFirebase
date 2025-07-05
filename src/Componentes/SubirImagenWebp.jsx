@@ -91,6 +91,7 @@ function SubirImagenWebP({setAdd, setInitBtn, categorias}) {
         titulo: watch('titulo'),
         descripcion: watch('descripcion'),
         precio: watch('precio'),
+        precioUnitario: watch('precio'),
         oferta: isOferta,
         porcentajeOff: isOferta ? watch('porcentaje'): '',
         urlImg: url,
